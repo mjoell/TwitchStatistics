@@ -10,15 +10,15 @@ public class TwitchChatCounter {
 	public static String mysqlpassword;
 	
 	public static void main(String args[]) throws Exception {
-		if(args.length != 4) {
+		if(args.length != 5) {
 			System.out.println("You messed up, please fix.");
 		} else {
 			username = args[0];
 			password = args[1];
 			channel = "#" + args[2];
 			mysqluser = args[3];
-			mysqlpassword = "";
-						
+			mysqlpassword = args[4];
+			
 			TwitchConnect.main();
 		}
 	}

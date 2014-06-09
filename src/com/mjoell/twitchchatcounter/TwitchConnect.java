@@ -7,7 +7,5 @@ public class TwitchConnect {
 		bot.setVerbose(true);
 		bot.connect("irc.twitch.tv", 6667, TwitchChatCounter.password);
 		bot.joinChannel(TwitchChatCounter.channel);
-		
-		bot.sendMessage(TwitchChatCounter.channel, "I'm here!");
 	}
 }

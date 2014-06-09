@@ -7,13 +7,15 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class Mysql {	
-	private static final String DB_DRIVER = "com.mysql.jdbc.Driver";
-	private static final String DB_CONNECTION = "jdbc:mysql://localhost:3306/twitch";
-	private static final String DB_USER = TwitchChatCounter.mysqluser;
-	private static final String DB_PASSWORD = "";
+	private static String DB_DRIVER = "com.mysql.jdbc.Driver";
+	private static String DB_CONNECTION = "jdbc:mysql://localhost:3306/twitch";
+	private static String DB_USER = TwitchChatCounter.mysqluser;
+	private static String DB_PASSWORD = TwitchChatCounter.mysqlpassword;
  
 	public static void main() {
-		
+		if(DB_PASSWORD.equals("false")) {
+			DB_PASSWORD = "";
+		}
 	}
 
 	public static void addOneForUserInChannel(String channel, String username) throws SQLException {
@@ -54,11 +56,82 @@ public class Mysql {
 			if(ps != null) {
 				ps.close();
 			}
+			
+			if(dbConnection != null) {
+				dbConnection.close();
+			}
 		}
 	}
 	
 	private static void addOneForUserGlobal() throws SQLException {
+		// TODO When out of beta, we will have a global count.  Until then...
+	}
+	
+	public static String getTopChatterInChannel(String channel) throws SQLException {
+		Connection dbConnection = null;
+		PreparedStatement ps = null;
+		String sendMessage = null;
+ 
+		String checkSQL = "SELECT * FROM " + channel + "_count ORDER BY messages DESC LIMIT 1";
 		
+		try {
+			dbConnection = getDBConnection();
+			ps = dbConnection.prepareStatement(checkSQL);
+			
+			final ResultSet resultSet = ps.executeQuery();
+			
+			if(resultSet.next()) {
+				String usernamefd = resultSet.getString("username");
+				int messagesfd = resultSet.getInt("messages");
+				
+				sendMessage  = "The top chatter right now is " + usernamefd + " with " + messagesfd + " on record!";
+			}
+		} catch(SQLException e) {
+			System.out.println(e.getMessage());
+		} finally {
+			if(ps != null) {
+				ps.close();
+			}
+			
+			if(dbConnection != null) {
+				dbConnection.close();
+			}
+		}
+		return sendMessage;
+	}
+	
+	public static String getTopTenChatterInChannel(String channel) throws SQLException {
+		Connection dbConnection = null;
+		PreparedStatement ps = null;
+		String sendMessage = "Top 10 chatters: ";
+		
+		String checkSQL = "SELECT * FROM " + channel + "_count ORDER BY messages DESC LIMIT 10";
+		
+		try {
+			dbConnection = getDBConnection();
+			ps = dbConnection.prepareStatement(checkSQL);
+			
+			final ResultSet resultSet = ps.executeQuery();
+			
+			while(resultSet.next()) {
+				String usernamefd = resultSet.getString("username");
+				int messagesfd = resultSet.getInt("messages");
+				
+				sendMessage = sendMessage + usernamefd + " - " + messagesfd + "; ";
+			}
+		} catch(SQLException e) {
+			System.out.println(e.getMessage());
+		} finally {
+			if(ps != null) {
+				ps.close();
+			}
+			
+			if(dbConnection != null) {
+				ps.close();
+			}
+		}
+		
+		return sendMessage;
 	}
 	
 	private static Connection getDBConnection() {
