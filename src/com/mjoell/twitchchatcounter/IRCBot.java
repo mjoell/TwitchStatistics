@@ -39,5 +39,17 @@ public class IRCBot extends PircBot {
 			}
 			sendMessage(TwitchChatCounter.channel, topChatter);
 		}
+		
+		String[] CommonEmotes = new String[]{"KappaHD", "FrankerZ", "Keppo", "PJSalt", "Kappa", "Kreygasm", "SwiftRage", "FailFish", "PogChamp"};
+		
+		for(int i = 0; i < CommonEmotes.length; i++) {
+			if(message.toLowerCase().contains(CommonEmotes[i])) {
+				try {
+					Mysql.addOneEmoteForChannel(CommonEmotes[i], channel);
+				} catch (SQLException e) {
+					System.out.println(e.getStackTrace());
+				}
+			}
+		}
 	}
 }
