@@ -134,6 +134,31 @@ public class Mysql {
 		return sendMessage;
 	}
 	
+	public static void addOneEmoteForChannel(String emote, String channel) throws SQLException {
+		Connection dbConnection = null;
+		PreparedStatement ps = null;
+		
+		String updateSQL = "UPDATE " + channel + "_emotes SET ? = ? + 1";
+		
+		try {
+			dbConnection = getDBConnection();
+			ps = dbConnection.prepareStatement(updateSQL);
+			ps.setString(1, emote);
+			ps.executeUpdate();
+			System.out.println("Adding one...");				
+		} catch(SQLException e) {
+			System.out.println(e.getStackTrace());
+		} finally {
+			if(ps != null) {
+				ps.close();
+			}
+			
+			if(dbConnection != null) {
+				ps.close();
+			}
+		}
+	}
+	
 	private static Connection getDBConnection() {
 		Connection dbConnection = null;
  
