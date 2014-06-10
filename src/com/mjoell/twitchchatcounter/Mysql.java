@@ -158,6 +158,42 @@ public class Mysql {
 		}
 	}
 	
+	public static String getEmoteCountInChannel(String channel) throws SQLException {
+		Connection dbConnection = null;
+		PreparedStatement ps = null;
+		String sendMessage = "How often have emotes been used?  ";
+		
+		String checkSQL = "SELECT * FROM " + channel + "_emotes";
+		
+		try {
+			dbConnection = getDBConnection();
+			ps = dbConnection.prepareStatement(checkSQL);
+			
+			final ResultSet resultSet = ps.executeQuery();
+			
+			while(resultSet.next()) {				
+				String[] CommonEmotes = new String[]{"Kappa"};
+				
+				for(int i = 0; i < CommonEmotes.length; i++) {
+					int count = resultSet.getInt(CommonEmotes[i]);
+					sendMessage = sendMessage + CommonEmotes[i] + " - " + count + " times; ";
+				}
+			}
+		} catch(SQLException e) {
+			System.out.println(e.getMessage());
+		} finally {
+			if(ps != null) {
+				ps.close();
+			}
+			
+			if(dbConnection != null) {
+				ps.close();
+			}
+		}
+		
+		return sendMessage;
+	}
+	
 	private static Connection getDBConnection() {
 		Connection dbConnection = null;
  
