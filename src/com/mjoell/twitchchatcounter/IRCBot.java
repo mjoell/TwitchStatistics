@@ -57,7 +57,7 @@ public class IRCBot extends PircBot {
 		for(int i = 0; i < CommonEmotes.length; i++) {
 			if(message.contains(CommonEmotes[i])) {
 				try {
-					Mysql.addOneEmoteForChannel(CommonEmotes[i], channel);
+					Mysql.addOneEmoteForChannel(CommonEmotes[i], channel.replace("#", ""));
 				} catch (SQLException e) {
 					e.printStackTrace();
 				}
