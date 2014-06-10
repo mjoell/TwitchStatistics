@@ -138,16 +138,15 @@ public class Mysql {
 		Connection dbConnection = null;
 		PreparedStatement ps = null;
 		
-		String updateSQL = "UPDATE " + channel + "_emotes SET ? = ? + 1";
+		String updateSQL = "UPDATE " + channel + "_emotes SET " + emote + " = 1 + " + emote;
 		
 		try {
 			dbConnection = getDBConnection();
 			ps = dbConnection.prepareStatement(updateSQL);
-			ps.setString(1, emote);
 			ps.executeUpdate();
 			System.out.println("Adding one...");				
 		} catch(SQLException e) {
-			System.out.println(e.getStackTrace());
+			e.printStackTrace();
 		} finally {
 			if(ps != null) {
 				ps.close();
