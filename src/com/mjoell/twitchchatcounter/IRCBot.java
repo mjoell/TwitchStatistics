@@ -25,7 +25,7 @@ public class IRCBot extends PircBot {
 		if(sender.toLowerCase().equals("pirateeeeeee") && message.toLowerCase().equals("uberfacts, topchatter")) {
 			String topChatter = null;
 			try {
-				topChatter = Mysql.getTopChatterInChannel(TwitchChatCounter.channel.replace("#", ""));
+				topChatter = Mysql.getTopChatterInChannel(channel.replace("#", ""));
 			} catch(SQLException e) {
 				e.printStackTrace();
 			}
@@ -35,7 +35,7 @@ public class IRCBot extends PircBot {
 		if(sender.toLowerCase().equals("pirateeeeeee") && message.toLowerCase().equals("uberfacts, top10chatters")) {
 			String topChatter = null;
 			try {
-				topChatter = Mysql.getTopTenChatterInChannel(TwitchChatCounter.channel.replace("#", ""));
+				topChatter = Mysql.getTopTenChatterInChannel(channel.replace("#", ""));
 			} catch(SQLException e) {
 				e.printStackTrace();
 			}
