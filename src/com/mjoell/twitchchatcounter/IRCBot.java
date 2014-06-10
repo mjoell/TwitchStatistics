@@ -19,7 +19,7 @@ public class IRCBot extends PircBot {
 				Mysql.addOneForUserInChannel(channel.replace("#", ""), sender);
 			}
 		} catch (SQLException e) {
-			System.out.println(e.getStackTrace());
+			e.printStackTrace();
 		}
 		
 		if(sender.toLowerCase().equals("pirateeeeeee") && message.toLowerCase().equals("uberfacts, topchatter")) {
@@ -27,7 +27,7 @@ public class IRCBot extends PircBot {
 			try {
 				topChatter = Mysql.getTopChatterInChannel(TwitchChatCounter.channel.replace("#", ""));
 			} catch(SQLException e) {
-				System.out.println(e.getStackTrace());
+				e.printStackTrace();
 			}
 			sendMessage(TwitchChatCounter.channel, topChatter);
 		}
@@ -37,7 +37,7 @@ public class IRCBot extends PircBot {
 			try {
 				topChatter = Mysql.getTopTenChatterInChannel(TwitchChatCounter.channel.replace("#", ""));
 			} catch(SQLException e) {
-				System.out.println(e.getStackTrace());
+				e.printStackTrace();
 			}
 			sendMessage(TwitchChatCounter.channel, topChatter);
 		}
@@ -49,7 +49,7 @@ public class IRCBot extends PircBot {
 				try {
 					Mysql.addOneEmoteForChannel(CommonEmotes[i], channel);
 				} catch (SQLException e) {
-					System.out.println(e.getStackTrace());
+					e.printStackTrace();
 				}
 			}
 		}
