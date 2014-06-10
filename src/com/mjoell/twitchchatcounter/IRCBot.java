@@ -52,7 +52,7 @@ public class IRCBot extends PircBot {
 			sendMessage(TwitchChatCounter.channel, emotes);
 		}
 		
-		String[] CommonEmotes = new String[]{"KappaHD", "FrankerZ", "Keppo", "PJSalt", "Kappa", "Kreygasm", "SwiftRage", "FailFish", "PogChamp"};
+		String[] CommonEmotes = new String[]{"KappaHD", "FrankerZ", "Keepo", "PJSalt", "Kappa", "Kreygasm", "SwiftRage", "FailFish", "PogChamp"};
 		
 		for(int i = 0; i < CommonEmotes.length; i++) {
 			if(message.contains(CommonEmotes[i])) {

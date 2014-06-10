@@ -172,12 +172,17 @@ public class Mysql {
 			final ResultSet resultSet = ps.executeQuery();
 			
 			while(resultSet.next()) {				
-				String[] CommonEmotes = new String[]{"Kappa"};
+				int KappaHD = resultSet.getInt("KappaHD");
+				int FrankerZ = resultSet.getInt("FrankerZ");
+				int Keepo = resultSet.getInt("Keepo");
+				int PJSalt = resultSet.getInt("PJSalt");
+				int Kreygasm = resultSet.getInt("Kreygasm");
+				int SwiftRage = resultSet.getInt("SwiftRage");
+				int FailFish = resultSet.getInt("FailFish");
+				int PogChamp = resultSet.getInt("PogChamp");
+				int Kappa = resultSet.getInt("Kappa");
 				
-				for(int i = 0; i < CommonEmotes.length; i++) {
-					int count = resultSet.getInt(CommonEmotes[i]);
-					sendMessage = sendMessage + CommonEmotes[i] + " - " + count + " times; ";
-				}
+				sendMessage = sendMessage + "Kappa - " + Kappa + "; FrankerZ - " + FrankerZ + "; KappaHD - " + KappaHD + "; Keepo - " + Keepo + "; PJSalt - " + PJSalt + "; Kreygasm - " + Kreygasm + "; SwiftRage - " + SwiftRage + "; Fail Fish - " + FailFish + "; PogChamp - " + PogChamp;
 			}
 		} catch(SQLException e) {
 			System.out.println(e.getMessage());
