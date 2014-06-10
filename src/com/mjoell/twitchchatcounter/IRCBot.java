@@ -15,7 +15,9 @@ public class IRCBot extends PircBot {
 	
 	public void onMessage(String channel, String sender, String login, String hostname, String message) {
 		try {
-			Mysql.addOneForUserInChannel(channel.replace("#", ""), sender);
+			if(!sender.toLowerCase().equals("nightbot") || !sender.toLowerCase().equals("moobot")) {
+				Mysql.addOneForUserInChannel(channel.replace("#", ""), sender);
+			}
 		} catch (SQLException e) {
 			System.out.println(e.getStackTrace());
 		}
@@ -43,7 +45,7 @@ public class IRCBot extends PircBot {
 		String[] CommonEmotes = new String[]{"KappaHD", "FrankerZ", "Keppo", "PJSalt", "Kappa", "Kreygasm", "SwiftRage", "FailFish", "PogChamp"};
 		
 		for(int i = 0; i < CommonEmotes.length; i++) {
-			if(message.toLowerCase().contains(CommonEmotes[i])) {
+			if(message.contains(CommonEmotes[i])) {
 				try {
 					Mysql.addOneEmoteForChannel(CommonEmotes[i], channel);
 				} catch (SQLException e) {
