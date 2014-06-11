@@ -11,7 +11,7 @@ import java.util.Properties;
 public class TwitchChatCounter {
 	public static String username;
 	public static String password;
-	public static String channel;
+	public static String[] channels;
 	public static String mysqluser;
 	public static String mysqlpassword;
 	public static boolean verbose;
@@ -28,7 +28,7 @@ public class TwitchChatCounter {
 				
 				properties.setProperty("twitchusername", "TwitchUsername");
 				properties.setProperty("twitchpassword", "TwitchPassword");
-				properties.setProperty("channel", "TwitchChannel");
+				properties.setProperty("channels", "1,2,3");
 				properties.setProperty("mysqluser", "MySQLUser");
 				properties.setProperty("mysqlpass", "MySQLPassword");
 				properties.setProperty("verbose", "false");
@@ -51,10 +51,12 @@ public class TwitchChatCounter {
 				properties.load(input);
 				username = properties.getProperty("twitchusername");
 				password = properties.getProperty("twitchpassword");
-				channel = "#" + properties.getProperty("channel");
 				mysqluser = properties.getProperty("mysqluser");
 				mysqlpassword = properties.getProperty("mysqlpassword");
 				verbose = Boolean.parseBoolean(properties.getProperty("verbose"));
+				
+				String channelsb4 = properties.getProperty("channels");
+				channels = channelsb4.split(",");
 			} catch(IOException e) {
 				e.printStackTrace();
 			} finally {
