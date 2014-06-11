@@ -11,6 +11,7 @@ public class Mysql {
 	private static String DB_CONNECTION = "jdbc:mysql://localhost:3306/twitch";
 	private static String DB_USER = TwitchChatCounter.mysqluser;
 	private static String DB_PASSWORD = TwitchChatCounter.mysqlpassword;
+	private static PreparedStatement ps;
  
 	public static void main() {
 		if(DB_PASSWORD.equals("false")) {
@@ -20,7 +21,6 @@ public class Mysql {
 
 	public static void addOneForUserInChannel(String channel, String username) throws SQLException {
 		Connection dbConnection = null;
-		PreparedStatement ps = null;
  
 		String checkSQL = "SELECT * FROM " + channel + "_count WHERE username = ?";
 		String updateSQL = "UPDATE " + channel + "_count SET messages = messages + 1 WHERE username = ?";
@@ -53,9 +53,7 @@ public class Mysql {
 		} catch(SQLException e) {
 			System.out.println(e.getMessage());
 		} finally {
-			if(ps != null) {
-				ps.close();
-			}
+			ps.clearParameters();
 			
 			if(dbConnection != null) {
 				dbConnection.close();
@@ -69,7 +67,6 @@ public class Mysql {
 	
 	public static String getTopChatterInChannel(String channel) throws SQLException {
 		Connection dbConnection = null;
-		PreparedStatement ps = null;
 		String sendMessage = null;
  
 		String checkSQL = "SELECT * FROM " + channel + "_count ORDER BY messages DESC LIMIT 1";
@@ -89,9 +86,7 @@ public class Mysql {
 		} catch(SQLException e) {
 			System.out.println(e.getMessage());
 		} finally {
-			if(ps != null) {
-				ps.close();
-			}
+			ps.clearParameters();
 			
 			if(dbConnection != null) {
 				dbConnection.close();
@@ -102,7 +97,6 @@ public class Mysql {
 	
 	public static String getTopTenChatterInChannel(String channel) throws SQLException {
 		Connection dbConnection = null;
-		PreparedStatement ps = null;
 		String sendMessage = "Top 10 chatters: ";
 		
 		String checkSQL = "SELECT * FROM " + channel + "_count ORDER BY messages DESC LIMIT 10";
@@ -122,9 +116,7 @@ public class Mysql {
 		} catch(SQLException e) {
 			System.out.println(e.getMessage());
 		} finally {
-			if(ps != null) {
-				ps.close();
-			}
+			ps.clearParameters();
 			
 			if(dbConnection != null) {
 				ps.close();
@@ -136,7 +128,6 @@ public class Mysql {
 	
 	public static void addOneEmoteForChannel(String emote, String channel) throws SQLException {
 		Connection dbConnection = null;
-		PreparedStatement ps = null;
 		
 		String updateSQL = "UPDATE " + channel + "_emotes SET " + emote + " = 1 + " + emote;
 		
@@ -148,9 +139,7 @@ public class Mysql {
 		} catch(SQLException e) {
 			e.printStackTrace();
 		} finally {
-			if(ps != null) {
-				ps.close();
-			}
+			ps.clearParameters();
 			
 			if(dbConnection != null) {
 				ps.close();
@@ -160,7 +149,6 @@ public class Mysql {
 	
 	public static String getEmoteCountInChannel(String channel) throws SQLException {
 		Connection dbConnection = null;
-		PreparedStatement ps = null;
 		String sendMessage = "How often have emotes been used?  ";
 		
 		String checkSQL = "SELECT * FROM " + channel + "_emotes";
@@ -187,9 +175,7 @@ public class Mysql {
 		} catch(SQLException e) {
 			System.out.println(e.getMessage());
 		} finally {
-			if(ps != null) {
-				ps.close();
-			}
+			ps.clearParameters();
 			
 			if(dbConnection != null) {
 				ps.close();
