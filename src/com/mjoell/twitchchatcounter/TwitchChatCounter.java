@@ -33,7 +33,7 @@ public class TwitchChatCounter {
 				properties.setProperty("mysqlpass", "MySQLPassword");
 				properties.setProperty("verbose", "false");
 				
-				properties.store(output,  null);
+				properties.store(output, null);
 				
 				System.out.println("No configuration file existed, one has been generated for you.");
 			} catch(IOException e) {

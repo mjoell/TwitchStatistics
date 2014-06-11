@@ -29,7 +29,7 @@ public class IRCBot extends PircBot {
 			} catch(SQLException e) {
 				e.printStackTrace();
 			}
-			sendMessage(TwitchChatCounter.channel, topChatter);
+			sendMessage(channel, topChatter);
 		}
 		
 		if(sender.toLowerCase().equals("pirateeeeeee") && message.toLowerCase().equals("uberfacts, top10chatters")) {
@@ -39,7 +39,7 @@ public class IRCBot extends PircBot {
 			} catch(SQLException e) {
 				e.printStackTrace();
 			}
-			sendMessage(TwitchChatCounter.channel, topChatter);
+			sendMessage(channel, topChatter);
 		}
 		
 		if(sender.toLowerCase().equals("pirateeeeeee") && message.toLowerCase().equals("uberfacts, emotes")) {
@@ -49,7 +49,7 @@ public class IRCBot extends PircBot {
 			} catch(SQLException e) {
 				e.printStackTrace();
 			}
-			sendMessage(TwitchChatCounter.channel, emotes);
+			sendMessage(channel, emotes);
 		}
 		
 		String[] CommonEmotes = new String[]{"KappaHD", "FrankerZ", "Keepo", "PJSalt", "Kappa", "Kreygasm", "SwiftRage", "FailFish", "PogChamp"};
