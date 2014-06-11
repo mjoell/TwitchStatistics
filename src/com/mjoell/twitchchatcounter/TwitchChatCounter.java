@@ -1,6 +1,12 @@
 package com.mjoell.twitchchatcounter;
 
-import java.sql.SQLException;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.util.Properties;
 
 public class TwitchChatCounter {
 	public static String username;
@@ -10,14 +16,43 @@ public class TwitchChatCounter {
 	public static String mysqlpassword;
 	
 	public static void main(String args[]) throws Exception {
-		if(args.length != 5) {
-			System.out.println("You messed up, please fix.");
+		File file = new File("twitch.conf");
+		
+		if(!file.exists()) {
+			Properties properties = new Properties();
+			OutputStream output = null;
+			
+			try {
+				output = new FileOutputStream("twitch.conf");
+				
+				properties.setProperty("twitchusername", "TwitchUsername");
+				properties.setProperty("twitchpassword", "TwitchPassword");
+				properties.setProperty("channel", "TwitchChannel");
+				properties.setProperty("mysqluser", "MySQLUser");
+				properties.setProperty("mysqlpass", "MySQLPassword");
+			} catch(IOException e) {
+				e.printStackTrace();
+			} finally {
+				output.close();
+			}
 		} else {
-			username = args[0];
-			password = args[1];
-			channel = "#" + args[2];
-			mysqluser = args[3];
-			mysqlpassword = args[4];
+			Properties properties = new Properties();
+			InputStream input = null;
+			
+			try {
+				input = new FileInputStream("twitch.conf");
+				
+				properties.load(input);
+				username = properties.getProperty("twitchusername");
+				password = properties.getProperty("twitchpassword");
+				channel = properties.getProperty("channel");
+				mysqluser = properties.getProperty("mysqluser");
+				mysqlpassword = properties.getProperty("mysqlpassword");
+			} catch(IOException e) {
+				e.printStackTrace();
+			} finally {
+				input.close();
+			}
 			
 			TwitchConnect.main();
 		}
