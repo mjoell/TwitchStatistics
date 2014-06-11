@@ -14,7 +14,7 @@ public class TwitchChatCounter {
 	public static String channel;
 	public static String mysqluser;
 	public static String mysqlpassword;
-	public static Boolean verbose;
+	public static boolean verbose;
 	
 	public static void main(String args[]) throws Exception {
 		File file = new File("twitch.conf");
@@ -33,6 +33,8 @@ public class TwitchChatCounter {
 				properties.setProperty("mysqlpass", "MySQLPassword");
 				properties.setProperty("verbose", "false");
 				
+				properties.store(output, null);
+				
 				System.out.println("No configuration file existed, one has been generated for you.");
 			} catch(IOException e) {
 				e.printStackTrace();
@@ -49,10 +51,10 @@ public class TwitchChatCounter {
 				properties.load(input);
 				username = properties.getProperty("twitchusername");
 				password = properties.getProperty("twitchpassword");
-				channel = properties.getProperty("channel");
+				channel = "#" + properties.getProperty("channel");
 				mysqluser = properties.getProperty("mysqluser");
 				mysqlpassword = properties.getProperty("mysqlpassword");
-				verbose = Boolean.valueOf(properties.getProperty("verbose"));
+				verbose = Boolean.parseBoolean(properties.getProperty("verbose"));
 			} catch(IOException e) {
 				e.printStackTrace();
 			} finally {
