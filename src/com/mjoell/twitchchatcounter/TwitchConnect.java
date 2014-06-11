@@ -13,7 +13,7 @@ public class TwitchConnect {
 		System.out.println("Connected to irc.twitch.tv");
 		
 		for(int i = 0; i < TwitchChatCounter.channels.length; i++) {
-			bot.joinChannel(TwitchChatCounter.channels[i]);
+			bot.joinChannel("#" + TwitchChatCounter.channels[i]);
 			System.out.println("Joined channel " + TwitchChatCounter.channels[i] + ".  Waiting 4 seconds before joining next.");
 			Thread.sleep(4000);
 		}
