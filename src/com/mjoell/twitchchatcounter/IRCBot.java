@@ -63,5 +63,9 @@ public class IRCBot extends PircBot {
 				}
 			}
 		}
+		
+		if(channel.toLowerCase().equals("#uberfacts") && message.toLowerCase().equals("uberfacts, help")) {
+			sendMessage(channel, "I'll have a help message soon!");
+		}
 	}
 }
