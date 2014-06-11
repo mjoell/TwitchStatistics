@@ -14,6 +14,7 @@ public class TwitchChatCounter {
 	public static String channel;
 	public static String mysqluser;
 	public static String mysqlpassword;
+	public static Boolean verbose;
 	
 	public static void main(String args[]) throws Exception {
 		File file = new File("twitch.conf");
@@ -30,6 +31,7 @@ public class TwitchChatCounter {
 				properties.setProperty("channel", "TwitchChannel");
 				properties.setProperty("mysqluser", "MySQLUser");
 				properties.setProperty("mysqlpass", "MySQLPassword");
+				properties.setProperty("verbose", "false");
 			} catch(IOException e) {
 				e.printStackTrace();
 			} finally {
@@ -48,6 +50,7 @@ public class TwitchChatCounter {
 				channel = properties.getProperty("channel");
 				mysqluser = properties.getProperty("mysqluser");
 				mysqlpassword = properties.getProperty("mysqlpassword");
+				verbose = Boolean.valueOf(properties.getProperty("verbose"));
 			} catch(IOException e) {
 				e.printStackTrace();
 			} finally {
