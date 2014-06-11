@@ -52,7 +52,7 @@ public class TwitchChatCounter {
 				username = properties.getProperty("twitchusername");
 				password = properties.getProperty("twitchpassword");
 				mysqluser = properties.getProperty("mysqluser");
-				mysqlpassword = properties.getProperty("mysqlpassword");
+				mysqlpassword = properties.getProperty("mysqlpass");
 				verbose = Boolean.parseBoolean(properties.getProperty("verbose"));
 				
 				String channelsb4 = properties.getProperty("channels");
