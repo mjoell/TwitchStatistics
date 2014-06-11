@@ -35,15 +35,16 @@ public class Mysql {
 			final ResultSet resultSet =  ps.executeQuery();
 			
 			if(resultSet.next()) {
+				@SuppressWarnings("unused")
 				final int count = resultSet.getInt(1);
-				System.out.println("Adding one...");
+				if(TwitchChatCounter.verbose) System.out.println("Adding one...");
 								
 				ps = dbConnection.prepareStatement(updateSQL);
 				ps.setString(1, username);
 				ps.executeUpdate();
 				
 			} else {
-				System.out.println("Inserting new...");
+				if(TwitchChatCounter.verbose) System.out.println("Inserting new...");
 								
 				ps = dbConnection.prepareStatement(insertSQL);
 				ps.setString(1, username);
@@ -51,7 +52,7 @@ public class Mysql {
 				ps.executeUpdate();
 			}
 		} catch(SQLException e) {
-			System.out.println(e.getMessage());
+			e.printStackTrace();
 		} finally {
 			ps.clearParameters();
 			
@@ -61,6 +62,7 @@ public class Mysql {
 		}
 	}
 	
+	@SuppressWarnings("unused")
 	private static void addOneForUserGlobal() throws SQLException {
 		// TODO When out of beta, we will have a global count.  Until then...
 	}
@@ -84,7 +86,7 @@ public class Mysql {
 				sendMessage  = "The top chatter right now is " + usernamefd + " with " + messagesfd + " on record!";
 			}
 		} catch(SQLException e) {
-			System.out.println(e.getMessage());
+			e.printStackTrace();
 		} finally {
 			ps.clearParameters();
 			
@@ -114,7 +116,7 @@ public class Mysql {
 				sendMessage = sendMessage + usernamefd + " - " + messagesfd + "; ";
 			}
 		} catch(SQLException e) {
-			System.out.println(e.getMessage());
+			e.printStackTrace();
 		} finally {
 			ps.clearParameters();
 			
@@ -135,7 +137,7 @@ public class Mysql {
 			dbConnection = getDBConnection();
 			ps = dbConnection.prepareStatement(updateSQL);
 			ps.executeUpdate();
-			System.out.println("Adding one...");				
+			if(TwitchChatCounter.verbose) System.out.println("Adding one...");				
 		} catch(SQLException e) {
 			e.printStackTrace();
 		} finally {
@@ -173,7 +175,7 @@ public class Mysql {
 				sendMessage = sendMessage + "Kappa - " + Kappa + "; FrankerZ - " + FrankerZ + "; KappaHD - " + KappaHD + "; Keepo - " + Keepo + "; PJSalt - " + PJSalt + "; Kreygasm - " + Kreygasm + "; SwiftRage - " + SwiftRage + "; Fail Fish - " + FailFish + "; PogChamp - " + PogChamp;
 			}
 		} catch(SQLException e) {
-			System.out.println(e.getMessage());
+			e.printStackTrace();
 		} finally {
 			ps.clearParameters();
 			
@@ -191,21 +193,16 @@ public class Mysql {
 		try {
 			Class.forName(DB_DRIVER);
 		} catch (ClassNotFoundException e) {
-			System.out.println(e.getMessage());
+			e.printStackTrace();
 		}
  
 		try {
 			dbConnection = DriverManager.getConnection(DB_CONNECTION, DB_USER,DB_PASSWORD);
 			return dbConnection;
 		} catch (SQLException e) {
-			System.out.println(e.getMessage());
+			e.printStackTrace();
 		}
 		
 		return dbConnection;
-	}
-	
-	private static java.sql.Timestamp getCurrentTimeStamp() {
-		java.util.Date today = new java.util.Date();
-		return new java.sql.Timestamp(today.getTime());
 	}
 }
