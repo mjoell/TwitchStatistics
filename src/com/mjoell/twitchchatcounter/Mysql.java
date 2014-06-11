@@ -172,7 +172,7 @@ public class Mysql {
 				int PogChamp = resultSet.getInt("PogChamp");
 				int Kappa = resultSet.getInt("Kappa");
 				
-				sendMessage = sendMessage + "Kappa - " + Kappa + "; FrankerZ - " + FrankerZ + "; KappaHD - " + KappaHD + "; Keepo - " + Keepo + "; PJSalt - " + PJSalt + "; Kreygasm - " + Kreygasm + "; SwiftRage - " + SwiftRage + "; Fail Fish - " + FailFish + "; PogChamp - " + PogChamp;
+				sendMessage = sendMessage + "Kappa - " + Kappa + "; FrankerZ - " + FrankerZ + "; KappaHD - " + KappaHD + "; Keepo - " + Keepo + "; PJSalt - " + PJSalt + "; Kreygasm - " + Kreygasm + "; SwiftRage - " + SwiftRage + "; FailFish - " + FailFish + "; PogChamp - " + PogChamp;
 			}
 		} catch(SQLException e) {
 			e.printStackTrace();
