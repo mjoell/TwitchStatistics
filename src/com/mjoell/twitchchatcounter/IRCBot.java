@@ -15,7 +15,7 @@ public class IRCBot extends PircBot {
 	
 	public void onMessage(String channel, String sender, String login, String hostname, String message) {
 		try {
-			if(!sender.toLowerCase().equals("nightbot") || !sender.toLowerCase().equals("moobot")) {
+			if(!sender.toLowerCase().equals("nightbot") && !sender.toLowerCase().equals("moobot") && !sender.toLowerCase().equals("uberfacts")) {
 				Mysql.addOneForUserInChannel(channel.replace("#", ""), sender);
 			}
 		} catch (SQLException e) {
