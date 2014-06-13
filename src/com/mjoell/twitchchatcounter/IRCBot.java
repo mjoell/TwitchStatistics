@@ -69,6 +69,13 @@ public class IRCBot extends PircBot {
 			if(message.toLowerCase().startsWith("!lookup")) {
 				//TODO Lookup stats on a particular user in global database, or in channel database.  Will come back here tomorrow.
 			}
+			if(message.toLowerCase().equals("!globaltop")) {
+				// TODO
+			}
+			if(message.toLowerCase().equals("!topchan")) {
+				// TODO
+			}
+			// TODO fill out more here as ideas arise
 		}
 	}
 }
