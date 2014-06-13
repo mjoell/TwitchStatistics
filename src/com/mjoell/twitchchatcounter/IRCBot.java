@@ -62,8 +62,13 @@ public class IRCBot extends PircBot {
 			}
 		}
 		
-		if(channel.toLowerCase().equals("#uberfacts") && message.toLowerCase().equals("uberfacts, help")) {
-			sendMessage(channel, "I'll have a help message soon!");
+		if(channel.toLowerCase().equals("#uberfacts")) {
+			if(message.toLowerCase().equals("!help")) {
+				sendMessage(channel, "Please read the channel help panel to the left for help information.");
+			}
+			if(message.toLowerCase().startsWith("!lookup")) {
+				//TODO Lookup stats on a particular user in global database, or in channel database.  Will come back here tomorrow.
+			}
 		}
 	}
 }
