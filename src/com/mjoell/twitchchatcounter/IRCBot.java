@@ -4,8 +4,6 @@ import java.sql.SQLException;
 
 import org.jibble.pircbot.PircBot;
 
-import com.mjoell.twitchchatcounter.TwitchChatCounter;
-
 public class IRCBot extends PircBot {
 	public static String topChatter;
 	
@@ -15,7 +13,7 @@ public class IRCBot extends PircBot {
 	
 	public void onMessage(String channel, String sender, String login, String hostname, String message) {
 		try {
-			if(!sender.toLowerCase().equals("nightbot") && !sender.toLowerCase().equals("moobot") && !sender.toLowerCase().equals("uberfacts")) {
+			if(!sender.toLowerCase().equals("nightbot") && !sender.toLowerCase().equals("moobot") && !sender.toLowerCase().equals("uberfacts") && !channel.toLowerCase().equals("#uberfacts")) {
 				Mysql.addOneForUserInChannel(channel.replace("#", ""), sender);
 			}
 		} catch (SQLException e) {
