@@ -21,33 +21,27 @@ public class IRCBot extends PircBot {
 		}
 		
 		if(sender.toLowerCase().equals("pirateeeeeee") && message.toLowerCase().equals("uberfacts, topchatter")) {
-			String topChatter = null;
 			try {
-				topChatter = Mysql.getTopChatterInChannel(channel.replace("#", ""));
-			} catch(SQLException e) {
+				sendMessage(channel, Mysql.getTopChatterInChannel(channel.replace("#", "")));
+			} catch (SQLException e) {
 				e.printStackTrace();
 			}
-			sendMessage(channel, topChatter);
 		}
 		
 		if(sender.toLowerCase().equals("pirateeeeeee") && message.toLowerCase().equals("uberfacts, top10chatters")) {
-			String topChatter = null;
 			try {
-				topChatter = Mysql.getTopTenChatterInChannel(channel.replace("#", ""));
-			} catch(SQLException e) {
+				sendMessage(channel, Mysql.getTopTenChatterInChannel(channel.replace("#", "")));
+			} catch (SQLException e) {
 				e.printStackTrace();
 			}
-			sendMessage(channel, topChatter);
 		}
 		
 		if(sender.toLowerCase().equals("pirateeeeeee") && message.toLowerCase().equals("uberfacts, emotes")) {
-			String emotes = null;
 			try {
-				emotes = Mysql.getEmoteCountInChannel(channel.replace("#", ""));
-			} catch(SQLException e) {
+				sendMessage(channel, Mysql.getEmoteCountInChannel(channel.replace("#", "")));
+			} catch (SQLException e) {
 				e.printStackTrace();
 			}
-			sendMessage(channel, emotes);
 		}
 		
 		String[] CommonEmotes = new String[]{"KappaHD", "FrankerZ", "Keepo", "PJSalt", "Kappa", "Kreygasm", "SwiftRage", "FailFish", "PogChamp"};
@@ -66,8 +60,21 @@ public class IRCBot extends PircBot {
 			if(message.toLowerCase().equals("!help")) {
 				sendMessage(channel, "Please read the channel help panel to the left for help information.");
 			}
-			if(message.toLowerCase().startsWith("!lookup")) {
+			if(message.toLowerCase().startsWith("!lookupuser")) {
 				//TODO Lookup stats on a particular user in global database, or in channel database.  Will come back here tomorrow.
+			}
+			if(message.toLowerCase().startsWith("!lookupchannel")) {
+				if(message.toLowerCase().equals("!lookupchannel")) {
+					sendMessage(channel, "This command requires parameters: !lookupchannel <channel>");
+					return;
+				}
+				
+				String[] command = message.split(" ");
+				try {
+					sendMessage(channel, command[1] + " has had a total of " + Mysql.getTotalMessagesInChannel(command[1]));
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
 			}
 			if(message.toLowerCase().equals("!globaltop")) {
 				// TODO
