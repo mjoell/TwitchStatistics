@@ -177,4 +177,32 @@ public class Mysql {
 		
 		return sendMessage;
 	}
+	
+	public static String getTotalMessagesInChannel(String channel) throws SQLException {
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		String sendMessage = null;
+ 
+		String checkSQL = "SELECT SUM(messages) FROM " + channel + "_count";
+		
+		try {
+			con = ds.getConnection();
+			ps = con.prepareStatement(checkSQL);
+			rs = ps.executeQuery();
+			
+			if(rs.next()) {
+				int messages = rs.getInt("messages_sum");
+				sendMessage = channel + " has had a total of " + messages + " messages sent!";
+			}
+		} catch(SQLException e) {
+			e.printStackTrace();
+		} finally {
+			if(rs != null) try { rs.close(); } catch (SQLException e) { e.printStackTrace(); }
+			if(ps != null) try { ps.close(); } catch (SQLException e) { e.printStackTrace(); }
+			if(con != null) try { con.close(); } catch (SQLException e) { e.printStackTrace(); }
+		}
+		
+		return sendMessage;
+	}
 }
