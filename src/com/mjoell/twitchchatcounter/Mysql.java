@@ -52,9 +52,46 @@ public class Mysql {
 		}
 	}
 	
-	@SuppressWarnings("unused")
-	private static void addOneForUserGlobal() throws SQLException {
-		// TODO When out of beta, we will have a global count.  Until then...
+	public static void addOneForUserGlobal(String username) throws SQLException {
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+ 
+		String checkSQL = "SELECT * FROM global WHERE username = ?";
+		String updateSQL = "UPDATE global SET messages = messages + 1 WHERE username = ?";
+		String insertSQL = "INSERT INTO global (username, messages) VALUES (?, ?)";
+		
+		try {
+			con = ds.getConnection();
+			
+			ps = con.prepareStatement(checkSQL);
+			
+			ps.setString(1, username);
+			
+			rs =  ps.executeQuery();
+			
+			if(rs.next()) {
+				if(TwitchChatCounter.verbose) System.out.println("Adding one...");
+								
+				ps = con.prepareStatement(updateSQL);
+				ps.setString(1, username);
+				ps.executeUpdate();
+				
+			} else {
+				if(TwitchChatCounter.verbose) System.out.println("Inserting new...");
+								
+				ps = con.prepareStatement(insertSQL);
+				ps.setString(1, username);
+				ps.setInt(2, 1);
+				ps.executeUpdate();
+			}
+		} catch(SQLException e) {
+			e.printStackTrace();
+		} finally {
+			if(rs != null) try { rs.close(); } catch (SQLException e) { e.printStackTrace(); }
+			if(ps != null) try { ps.close(); } catch (SQLException e) { e.printStackTrace(); }
+			if(con != null) try { con.close(); } catch (SQLException e) { e.printStackTrace(); }
+		}
 	}
 	
 	public static String getTopChatterInChannel(String channel) throws SQLException {
