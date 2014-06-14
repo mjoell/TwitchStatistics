@@ -15,6 +15,7 @@ public class IRCBot extends PircBot {
 		try {
 			if(!sender.toLowerCase().equals("nightbot") && !sender.toLowerCase().equals("moobot") && !sender.toLowerCase().equals("uberfacts") && !channel.toLowerCase().equals("#uberfacts")) {
 				Mysql.addOneForUserInChannel(channel.replace("#", ""), sender);
+				Mysql.addOneForUserGlobal(sender);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -61,7 +62,27 @@ public class IRCBot extends PircBot {
 				sendMessage(channel, "Please read the channel help panel to the left for help information.");
 			}
 			if(message.toLowerCase().startsWith("!lookupuser")) {
-				//TODO Lookup stats on a particular user in global database, or in channel database.  Will come back here tomorrow.
+				if(message.toLowerCase().equals("!lookupuser")) {
+					sendMessage(channel, "This command requires parameters: !lookupuser <username> | !lookupuser <username> <channel>");
+					return;
+				}
+				
+				String[] command = message.split(" ");
+				if(command.length == 2) {
+					try {
+						sendMessage(channel, Mysql.getCountUserGlobal(command [1]));
+					} catch (SQLException e) {
+						e.printStackTrace();
+					}
+				}
+				if(command.length == 3) {
+					try {
+						sendMessage(channel, Mysql.getCountUserChannel(command[2], command[1]));
+					} catch (SQLException e) {
+						e.printStackTrace();
+					}
+					return;
+				}
 			}
 			if(message.toLowerCase().startsWith("!lookupchannel")) {
 				if(message.toLowerCase().equals("!lookupchannel")) {
@@ -75,17 +96,30 @@ public class IRCBot extends PircBot {
 					if(total.contains("null")) {
 						sendMessage(channel, "An error has occured.  Most likely, the channel " + command[1] + " is not being watched, and no data on it exists.  If not, check back later and it should be fixed.");
 					} else {
-						sendMessage(channel, command[1] + " has had a total of " + total + " messages sent!");
+						sendMessage(channel, total);
 					}
 				} catch (SQLException e) {
 					e.printStackTrace();
 				}
 			}
-			if(message.toLowerCase().equals("!globaltop")) {
-				// TODO
+			if(message.toLowerCase().equals("!topglobal")) {
+				try {
+					sendMessage(channel, Mysql.getTopGlobalUser());
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
 			}
-			if(message.toLowerCase().equals("!topchan")) {
-				// TODO
+			if(message.toLowerCase().startsWith("!topchan")) {
+				if(message.toLowerCase().equals("!topchan")) {
+					sendMessage(channel, "This command requires parameters: !topchan <channel>");
+				}
+				
+				String[] command = message.split(" ");
+				try {
+					sendMessage(channel, Mysql.getTopChannelUser(command[1]));
+				} catch(SQLException e) {
+					e.printStackTrace();
+				}
 			}
 			// TODO fill out more here as ideas arise
 		}
