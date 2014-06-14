@@ -1,5 +1,5 @@
 - [x] MySQL Improvements
 - [x] Multichannel/config file
-- [ ] Full set of commands for bot in its own channel
+- [x] Full set of commands for bot in its own channel - Will be adding more
 - [ ] Rate limit command usage to prevent global
 - [ ] Web end
