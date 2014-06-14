@@ -71,7 +71,12 @@ public class IRCBot extends PircBot {
 				
 				String[] command = message.split(" ");
 				try {
-					sendMessage(channel, command[1] + " has had a total of " + Mysql.getTotalMessagesInChannel(command[1]));
+					String total = Mysql.getTotalMessagesInChannel(command[1]);
+					if(total.contains("null")) {
+						sendMessage(channel, "An error has occured.  Most likely, the channel " + command[1] + " is not being watched, and no data on it exists.  If not, check back later and it should be fixed.");
+					} else {
+						sendMessage(channel, command[1] + " has had a total of " + total + " messages sent!");
+					}
 				} catch (SQLException e) {
 					e.printStackTrace();
 				}

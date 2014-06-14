@@ -191,10 +191,9 @@ public class Mysql {
 			ps = con.prepareStatement(checkSQL);
 			rs = ps.executeQuery();
 			
-			if(rs.next()) {
-				int messages = rs.getInt("messages_sum");
-				sendMessage = channel + " has had a total of " + messages + " messages sent!";
-			}
+			rs.next();
+			int messages = rs.getInt(1);
+			sendMessage = channel + " has had a total of " + messages + " messages sent!";
 		} catch(SQLException e) {
 			e.printStackTrace();
 		} finally {

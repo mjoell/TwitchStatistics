@@ -19,6 +19,7 @@ public class TwitchConnect {
 		}
 		bot.joinChannel("#uberfacts");
 		System.out.println("Joined channel uberfacts.  Waiting 4 seconds before joining next.");
+		Thread.sleep(4000);
 
 		System.out.println("Joined all channels.  Assuming you're not in verbose, this is the last you'll hear from us for a while.");
 	}
