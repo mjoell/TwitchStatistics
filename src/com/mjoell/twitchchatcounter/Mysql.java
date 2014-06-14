@@ -241,4 +241,117 @@ public class Mysql {
 		
 		return sendMessage;
 	}
+	
+	public static String getCountUserChannel(String channel, String username) throws SQLException {
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		String sendMessage = null;
+		
+		String checkSQL = "SELECT messages FROM " + channel + "_count WHERE username = ?";
+		
+		try {
+			con = ds.getConnection();
+			ps = con.prepareStatement(checkSQL);
+			ps.setString(1, username);
+			rs = ps.executeQuery();
+			
+			rs.next();
+			int messages = rs.getInt("messages");
+			sendMessage = username + " has sent a total of " + messages + " in " + channel + "'s channel!";
+		} catch(SQLException e) {
+			e.printStackTrace();
+		} finally {
+			if(rs != null) try { rs.close(); } catch (SQLException e) { e.printStackTrace(); }
+			if(ps != null) try { ps.close(); } catch (SQLException e) { e.printStackTrace(); }
+			if(con != null) try { con.close(); } catch (SQLException e) { e.printStackTrace(); }
+		}
+		
+		return sendMessage;
+	}
+	
+	public static String getCountUserGlobal(String username) throws SQLException {
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		String sendMessage = null;
+		
+		String checkSQL = "SELECT messages FROM global WHERE username = ?";
+		
+		try {
+			con = ds.getConnection();
+			ps = con.prepareStatement(checkSQL);
+			ps.setString(1, username);
+			rs = ps.executeQuery();
+			
+			rs.next();
+			int messages = rs.getInt("messages");
+			sendMessage = username + " has sent a total of " + messages + " messages in tracked channels!";
+			
+		} catch(SQLException e) {
+			e.printStackTrace();
+		} finally {
+			if(rs != null) try { rs.close(); } catch (SQLException e) { e.printStackTrace(); }
+			if(ps != null) try { ps.close(); } catch (SQLException e) { e.printStackTrace(); }
+			if(con != null) try { con.close(); } catch (SQLException e) { e.printStackTrace(); }
+		}
+		
+		return sendMessage;
+	}
+	
+	public static String getTopGlobalUser() throws SQLException {
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		String sendMessage = null;
+		
+		String checkSQL = "SELECT * FROM global ORDER BY messages DESC LIMIT 1";
+		
+		try {
+			con = ds.getConnection();
+			ps = con.prepareStatement(checkSQL);
+			rs = ps.executeQuery();
+			
+			rs.next();
+			int messages = rs.getInt("messages");
+			String username = rs.getString("username");
+			sendMessage = username + " holds the global record with " + messages + " messages in tracked channels!";
+		} catch(SQLException e) {
+			e.printStackTrace();
+		} finally {
+			if(rs != null) try { rs.close(); } catch (SQLException e) { e.printStackTrace(); }
+			if(ps != null) try { ps.close(); } catch (SQLException e) { e.printStackTrace(); }
+			if(con != null) try { con.close(); } catch (SQLException e) { e.printStackTrace(); }
+		}
+		
+		return sendMessage;
+	}
+	
+	public static String getTopChannelUser(String channel) throws SQLException {
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		String sendMessage = null;
+		
+		String checkSQL = "SELECT * FROM " + channel + "_count ORDER BY messages DESC LIMIT 1";
+		
+		try {
+			con = ds.getConnection();
+			ps = con.prepareStatement(checkSQL);
+			rs = ps.executeQuery();
+			
+			rs.next();
+			int messages = rs.getInt("messages");
+			String username = rs.getString("username");
+			sendMessage = username + " holds the " + channel + " record with " + messages + " messages in the channel!";
+		} catch(SQLException e) {
+			e.printStackTrace();
+		} finally {
+			if(rs != null) try { rs.close(); } catch (SQLException e) { e.printStackTrace(); }
+			if(ps != null) try { ps.close(); } catch (SQLException e) { e.printStackTrace(); }
+			if(con != null) try { con.close(); } catch (SQLException e) { e.printStackTrace(); }
+		}
+		
+		return sendMessage;
+	}
 }
