@@ -122,6 +122,11 @@ public class IRCBot extends PircBot {
 				}
 			}
 			// TODO fill out more here as ideas arise
+			
+			if(message.toLowerCase().equals("!join")) {
+				String chan = "#" + sender;
+				sendMessage(channel, "I will join " + chan + " within the next 5 seconds.  Please wait while I setup a database for you.");
+			}
 		}
 	}
 }
