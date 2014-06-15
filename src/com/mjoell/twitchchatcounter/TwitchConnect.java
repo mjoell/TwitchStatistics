@@ -23,4 +23,9 @@ public class TwitchConnect {
 
 		System.out.println("Joined all channels.  Assuming you're not in verbose, this is the last you'll hear from us for a while.");
 	}
+	
+	public static void joinNew(String channel) {
+		bot.joinChannel("#" + channel);
+		System.out.println("Joined new channel " + channel);
+	}
 }

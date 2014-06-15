@@ -57,8 +57,7 @@ public class TwitchChatCounter {
 				verbose = Boolean.parseBoolean(properties.getProperty("verbose"));
 				chanlist = properties.getProperty("channels");
 				
-				String channelsb4 = properties.getProperty("channels");
-				channels = channelsb4.split(",");
+				channels = chanlist.split(",");
 			} catch(IOException e) {
 				e.printStackTrace();
 			} finally {
@@ -76,8 +75,8 @@ public class TwitchChatCounter {
 		try {
 			output = new FileOutputStream("twitch.conf");
 			
-			properties.setProperty("channels", channels + "," + channel);
-			
+			properties.setProperty("channels", chanlist + "," + channel);
+			channels = chanlist.split(",");
 			properties.store(output, null);
 		} catch(IOException e) {
 			e.printStackTrace();

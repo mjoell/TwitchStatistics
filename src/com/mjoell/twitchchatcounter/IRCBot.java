@@ -1,5 +1,6 @@
 package com.mjoell.twitchchatcounter;
 
+import java.io.IOException;
 import java.sql.SQLException;
 
 import org.jibble.pircbot.PircBot;
@@ -124,8 +125,22 @@ public class IRCBot extends PircBot {
 			// TODO fill out more here as ideas arise
 			
 			if(message.toLowerCase().equals("!join")) {
-				String chan = "#" + sender;
+				String chan = sender;
+				
+				for(int i = 0; i < TwitchChatCounter.channels.length; i++) {
+					if(chan.equals(TwitchChatCounter.channels[i])) {
+						sendMessage(channel, "I am already in that channel.");
+						return;
+					}
+				}
+				
 				sendMessage(channel, "I will join " + chan + " within the next 5 seconds.  Please wait while I setup a database for you.");
+				try {
+					TwitchChatCounter.addChannel(chan);
+					TwitchConnect.joinNew("#" + chan);
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
 			}
 		}
 	}
