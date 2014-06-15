@@ -25,7 +25,7 @@ public class TwitchConnect {
 	}
 	
 	public static void joinNew(String channel) {
-		bot.joinChannel("#" + channel);
+		bot.joinChannel(channel);
 		System.out.println("Joined new channel " + channel);
 	}
 }

@@ -358,9 +358,26 @@ public class Mysql {
 	public static void addChannel(String channel) throws SQLException {
 		Connection con = null;
 		PreparedStatement ps = null;
+		PreparedStatement ps2 = null;
 		ResultSet rs = null;
 		
-		String createSQL = "CREATE TABLE " + channel + "_count (id INT(11) AUTO_INCREMENT, username VARCHAR(50), messages INT(11))";
+		String createSQL = "CREATE TABLE " + channel + "_count (id INT(11) AUTO_INCREMENT PRIMARY KEY, username VARCHAR(50), messages INT(11))";
 		String createSQL2 = "CREATE TABLE " + channel + "_emotes (KappaHD INT(11), FrankerZ INT(11), Keepo INT(11), PJSalt INT(11), Kappa INT(11), Kreygasm INT(11), SwiftRage INT(11), FailFish INT(11), PogChamp INT(11))";
+		
+		try {
+			con = ds.getConnection();
+			
+			ps = con.prepareStatement(createSQL);
+			ps.executeUpdate();
+			
+			ps2 = con.prepareStatement(createSQL2);
+			ps2.executeUpdate();
+		} catch(SQLException e) {
+			e.printStackTrace();
+		} finally {
+			if(rs != null) try { rs.close(); } catch (SQLException e) { e.printStackTrace(); }
+			if(ps != null) try { ps.close(); } catch (SQLException e) { e.printStackTrace(); }
+			if(con != null) try { con.close(); } catch (SQLException e) { e.printStackTrace(); }
+		}
 	}
 }

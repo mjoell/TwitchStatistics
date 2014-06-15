@@ -138,7 +138,11 @@ public class IRCBot extends PircBot {
 				try {
 					TwitchChatCounter.addChannel(chan);
 					TwitchConnect.joinNew("#" + chan);
-				} catch (IOException e) {
+					Mysql.addChannel(chan);
+					Thread.sleep(2000);
+					sendMessage(chan, "Hi!  I have joined and will begin tracking your channel now!");
+					
+				} catch (IOException|SQLException|InterruptedException e) {
 					e.printStackTrace();
 				}
 			}

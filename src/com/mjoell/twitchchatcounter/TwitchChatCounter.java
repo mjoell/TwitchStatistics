@@ -70,12 +70,17 @@ public class TwitchChatCounter {
 	
 	public static void addChannel(String channel) throws IOException {
 		Properties properties = new Properties();
+		InputStream input = null;
 		OutputStream output = null;
 		
 		try {
-			output = new FileOutputStream("twitch.conf");
+			input = new FileInputStream("twitch.conf");
+			properties.load(input);
+			input.close();
 			
-			properties.setProperty("channels", chanlist + "," + channel);
+			output = new FileOutputStream("twitch.conf");
+			chanlist = chanlist + "," + channel;
+			properties.setProperty("channels", chanlist);
 			channels = chanlist.split(",");
 			properties.store(output, null);
 		} catch(IOException e) {
