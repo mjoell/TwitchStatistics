@@ -22,7 +22,7 @@ public class IRCBot extends PircBot {
 			e.printStackTrace();
 		}
 		
-		if(sender.toLowerCase().equals("pirateeeeeee") && message.toLowerCase().equals("uberfacts, topchatter")) {
+		if((sender.toLowerCase().equals("pirateeeeeee") || sender.toLowerCase().equals("maniacno")) && message.toLowerCase().equals("uberfacts, topchatter")) {
 			try {
 				sendMessage(channel, Mysql.getTopChatterInChannel(channel.replace("#", "")));
 			} catch (SQLException e) {
@@ -30,7 +30,7 @@ public class IRCBot extends PircBot {
 			}
 		}
 		
-		if(sender.toLowerCase().equals("pirateeeeeee") && message.toLowerCase().equals("uberfacts, top10chatters")) {
+		if((sender.toLowerCase().equals("pirateeeeeee") || sender.toLowerCase().equals("maniacno")) && message.toLowerCase().equals("uberfacts, top10chatters")) {
 			try {
 				sendMessage(channel, Mysql.getTopTenChatterInChannel(channel.replace("#", "")));
 			} catch (SQLException e) {
@@ -38,7 +38,7 @@ public class IRCBot extends PircBot {
 			}
 		}
 		
-		if(sender.toLowerCase().equals("pirateeeeeee") && message.toLowerCase().equals("uberfacts, emotes")) {
+		if((sender.toLowerCase().equals("pirateeeeeee") || sender.toLowerCase().equals("maniacno")) && message.toLowerCase().equals("uberfacts, emotes")) {
 			try {
 				sendMessage(channel, Mysql.getEmoteCountInChannel(channel.replace("#", "")));
 			} catch (SQLException e) {
