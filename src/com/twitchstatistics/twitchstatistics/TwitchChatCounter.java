@@ -1,4 +1,4 @@
-package com.mjoell.twitchchatcounter;
+package com.twitchstatistics.twitchstatistics;
 
 import java.io.File;
 import java.io.FileInputStream;

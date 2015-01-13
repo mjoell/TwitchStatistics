@@ -1,4 +1,4 @@
-package com.mjoell.twitchchatcounter;
+package com.twitchstatistics.twitchstatistics;
 
 public class TwitchConnect {
 	private static IRCBot bot = new IRCBot();

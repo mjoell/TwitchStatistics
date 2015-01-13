@@ -1,4 +1,4 @@
-package com.mjoell.twitchchatcounter;
+package com.twitchstatistics.twitchstatistics;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
