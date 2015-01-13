@@ -29,14 +29,14 @@ public class Mysql {
 			rs =  ps.executeQuery();
 			
 			if(rs.next()) {
-				if(TwitchChatCounter.verbose) System.out.println("Adding one...");
+				if(TwitchStatistics.verbose) System.out.println("Adding one...");
 								
 				ps = con.prepareStatement(updateSQL);
 				ps.setString(1, username);
 				ps.executeUpdate();
 				
 			} else {
-				if(TwitchChatCounter.verbose) System.out.println("Inserting new...");
+				if(TwitchStatistics.verbose) System.out.println("Inserting new...");
 								
 				ps = con.prepareStatement(insertSQL);
 				ps.setString(1, username);
@@ -71,14 +71,14 @@ public class Mysql {
 			rs =  ps.executeQuery();
 			
 			if(rs.next()) {
-				if(TwitchChatCounter.verbose) System.out.println("Adding one...");
+				if(TwitchStatistics.verbose) System.out.println("Adding one...");
 								
 				ps = con.prepareStatement(updateSQL);
 				ps.setString(1, username);
 				ps.executeUpdate();
 				
 			} else {
-				if(TwitchChatCounter.verbose) System.out.println("Inserting new...");
+				if(TwitchStatistics.verbose) System.out.println("Inserting new...");
 								
 				ps = con.prepareStatement(insertSQL);
 				ps.setString(1, username);
@@ -166,7 +166,7 @@ public class Mysql {
 			con = ds.getConnection();
 			ps = con.prepareStatement(updateSQL);
 			ps.executeUpdate();
-			if(TwitchChatCounter.verbose) System.out.println("Adding one...");				
+			if(TwitchStatistics.verbose) System.out.println("Adding one...");				
 		} catch(SQLException e) {
 			e.printStackTrace();
 		} finally {

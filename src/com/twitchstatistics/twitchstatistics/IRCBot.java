@@ -9,12 +9,12 @@ public class IRCBot extends PircBot {
 	public static String topChatter;
 	
 	public IRCBot() {
-		this.setName(TwitchChatCounter.username);
+		this.setName(TwitchStatistics.username);
 	}
 	
 	public void onMessage(String channel, String sender, String login, String hostname, String message) {
 		try {
-			if(!sender.toLowerCase().equals("nightbot") && !sender.toLowerCase().equals("moobot") && !sender.toLowerCase().equals("uberfacts") && !channel.toLowerCase().equals("#uberfacts")) {
+			if(!sender.toLowerCase().equals("ttvstats") && !sender.toLowerCase().contains("bot") && !channel.toLowerCase().equals("#uberfacts")) {
 				Mysql.addOneForUserInChannel(channel.replace("#", ""), sender);
 				Mysql.addOneForUserGlobal(sender);
 			}
@@ -22,7 +22,7 @@ public class IRCBot extends PircBot {
 			e.printStackTrace();
 		}
 		
-		if((sender.toLowerCase().equals("pirateeeeeee") || sender.toLowerCase().equals("maniacno")) && message.toLowerCase().equals("uberfacts, topchatter")) {
+		if((sender.toLowerCase().equals("pirateeeeeee") || sender.toLowerCase().equals("maniacno")) && message.toLowerCase().equals("ttvstats, topchatter")) {
 			try {
 				sendMessage(channel, Mysql.getTopChatterInChannel(channel.replace("#", "")));
 			} catch (SQLException e) {
@@ -30,7 +30,7 @@ public class IRCBot extends PircBot {
 			}
 		}
 		
-		if((sender.toLowerCase().equals("pirateeeeeee") || sender.toLowerCase().equals("maniacno")) && message.toLowerCase().equals("uberfacts, top10chatters")) {
+		if((sender.toLowerCase().equals("pirateeeeeee") || sender.toLowerCase().equals("maniacno")) && message.toLowerCase().equals("ttvstats, top10chatters")) {
 			try {
 				sendMessage(channel, Mysql.getTopTenChatterInChannel(channel.replace("#", "")));
 			} catch (SQLException e) {
@@ -38,7 +38,7 @@ public class IRCBot extends PircBot {
 			}
 		}
 		
-		if((sender.toLowerCase().equals("pirateeeeeee") || sender.toLowerCase().equals("maniacno")) && message.toLowerCase().equals("uberfacts, emotes")) {
+		if((sender.toLowerCase().equals("pirateeeeeee") || sender.toLowerCase().equals("maniacno")) && message.toLowerCase().equals("ttvstats, emotes")) {
 			try {
 				sendMessage(channel, Mysql.getEmoteCountInChannel(channel.replace("#", "")));
 			} catch (SQLException e) {
@@ -58,7 +58,7 @@ public class IRCBot extends PircBot {
 			}
 		}
 		
-		if(channel.toLowerCase().equals("#uberfacts")) {
+		if(channel.toLowerCase().equals("#ttvstats")) {
 			if(message.toLowerCase().equals("!help")) {
 				sendMessage(channel, "Please read the channel help panel to the left for help information.");
 			}
@@ -127,8 +127,8 @@ public class IRCBot extends PircBot {
 			if(message.toLowerCase().equals("!join")) {
 				String chan = sender;
 				
-				for(int i = 0; i < TwitchChatCounter.channels.length; i++) {
-					if(chan.equals(TwitchChatCounter.channels[i])) {
+				for(int i = 0; i < TwitchStatistics.channels.length; i++) {
+					if(chan.equals(TwitchStatistics.channels[i])) {
 						sendMessage(channel, "I am already in that channel.");
 						return;
 					}
@@ -136,7 +136,7 @@ public class IRCBot extends PircBot {
 				
 				sendMessage(channel, "I will join " + chan + " within the next 5 seconds.  Please wait while I setup a database for you.");
 				try {
-					TwitchChatCounter.addChannel(chan);
+					TwitchStatistics.addChannel(chan);
 					TwitchConnect.joinNew("#" + chan);
 					Mysql.addChannel(chan);
 					Thread.sleep(2000);
