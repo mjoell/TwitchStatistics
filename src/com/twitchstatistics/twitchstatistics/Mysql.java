@@ -10,6 +10,7 @@ import javax.sql.DataSource;
 public class Mysql {
 	private static DataSource ds = MysqlDS.getDataSource();
 
+	@SuppressWarnings("resource")
 	public static void addOneForUserInChannel(String channel, String username) throws SQLException {
 		Connection con = null;
 		PreparedStatement ps = null;
@@ -30,7 +31,7 @@ public class Mysql {
 			
 			if(rs.next()) {
 				if(TwitchStatistics.verbose) System.out.println("Adding one...");
-								
+				
 				ps = con.prepareStatement(updateSQL);
 				ps.setString(1, username);
 				ps.executeUpdate();
@@ -52,6 +53,7 @@ public class Mysql {
 		}
 	}
 	
+	@SuppressWarnings("resource")
 	public static void addOneForUserGlobal(String username) throws SQLException {
 		Connection con = null;
 		PreparedStatement ps = null;
